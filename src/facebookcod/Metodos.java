@@ -23,8 +23,9 @@ import javax.swing.JOptionPane;
  * @author artur
  */
 public class Metodos {
-    
+
     static Facebook facebook;
+
     /**
      * Metodo de validar tokkens y obtener los permisos
      */
@@ -32,39 +33,38 @@ public class Metodos {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
                 .setOAuthAppId("419969195026537")
-                .setOAuthAppSecret("a9857f890691750e5ea2764a42403362")
-                .setOAuthAccessToken("EAACEdEose0cBAK4s0XEEcfnmBnSHkfCrXgedVzn4XMoZB8d4DW98dQXzIbjRZBQZC0GZAW5joYX3gOu6klA3cBrVu9EVAL2Wn6ncCInIjnSopmdZAGgG9zxmhMjNz9t8R88u12TkTkpHtLkRCkEYil8emaZCYCBz1tkKRc2mO4vi4XqJqVgSJclwD7KukjZASMZD")
+                .setOAuthAppSecret("c9815dbef0a61179418187a611ede72f")
+                .setOAuthAccessToken("EAAF99bKvqGkBAI45Cgiv4kiAhbKEdAiU9GNDakxPsjeD4OgGwZBNAG1DbNsYC91VjVUBfsf0dcRngdYqMmDi9v01FQlbGhyC43TaCt84cZALo64ZA5jXYdCHK8ZA5uZB0bWgHUe92ZAiLG63e05yYqlMN7kadZBx70bhnnktlsLZCSnOOkRcLyWUMJH9Nxu9ZCNAZD")
                 .setOAuthPermissions("email,publish_stream,publish_actions,user_likes,user_status,user_about_me,user_photos,user_posts");
         FacebookFactory ff = new FacebookFactory(cb.build());
         facebook = ff.getInstance();
     }
-    
-     /**
+
+    /**
      * postea un estado nuevo
      *
      * @param mensaje contiene el mensaje a postear
      */
-    public static void postearMensaje(String mensaje) {
-
-        try {
-            facebook.postStatusMessage(mensaje);
-        } catch (FacebookException ex) {
-            Logger.getLogger(Metodos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+    public static void postearMensaje(String mensaje) throws FacebookException {
+        facebook.postStatusMessage(mensaje);
     }
-    
+
     /**
      * buscar un post
      *
      * @throws FacebookException
      */
-    public static void buscarPost() throws FacebookException {
-        ResponseList<Post> results = facebook.getPosts(JOptionPane.showInputDialog(null, "Introduce la busqueda"));
+    public static void buscarPost() {
+        ResponseList<Post> results;
+        try {
+            results = facebook.getPosts(JOptionPane.showInputDialog(null, "Introduce la busqueda"));
+            System.out.println(results.toString());
+        } catch (FacebookException ex) {
+            Logger.getLogger(Metodos.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        System.out.println(results.toString());
     }
-    
+
     /**
      * comenta una foto publicada en tu propio muro,el primer parámetro es el
      * ID,el segundo el comentario
@@ -74,12 +74,14 @@ public class Metodos {
     public static void comentario() throws FacebookException {
         facebook.commentPhoto(JOptionPane.showInputDialog("Introduce el ID de la foto "), JOptionPane.showInputDialog(" Introduce el comentario  "));
     }
-    
+
     /**
-     * crea un nuevo post con imagen incluida,pero sólo desde  una URL  dada por parámetro
+     * crea un nuevo post con imagen incluida,pero sólo desde una URL dada por
+     * parámetro
      *
-     * los datos de postear foto me las inventé porque no se me ocurría que imagen buscar
-     * 
+     * los datos de postear foto me las inventé porque no se me ocurría que
+     * imagen buscar
+     *
      * @throws MalformedURLException
      * @throws FacebookException
      */
@@ -91,7 +93,7 @@ public class Metodos {
                 .description("Decribiendo la imagen subida...");
         facebook.postFeed(post);
     }
-    
+
     /**
      * para buscar feeds referentes a las palabras de búsqueda
      *
