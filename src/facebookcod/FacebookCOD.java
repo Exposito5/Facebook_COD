@@ -24,7 +24,7 @@ public class FacebookCOD {
      do{
         m.autorizar();
         select = Integer.parseInt(JOptionPane.showInputDialog("Introduzca la opción deseada "
-                + "\n 1.postear \n 2.buscar Post \n 3. Mostrar Feed \n 4.comentar Foto \n 5. Postear foto \n 0.Salir"));
+                + "\n 1.Pueblicar un estado \n 2.buscar post \n 3. Mostrar Feed \n 4.Comentar una foto \n 5. Subir una foto \n 0.Salir"));
         switch(select){ 
         case 1: m.postearMensaje(JOptionPane.showInputDialog("Introduce el contenido del post "));
         break;
